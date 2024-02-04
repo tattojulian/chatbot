@@ -31,6 +31,7 @@ class OpenAIClient:
         return response.choices[0].message.content
 class OpenAIClient:
     def __init__(self):
+        pass
         # sprint ("\nopenai key is" + openai.api_key + " and its type is " + openai.api_type)
 
     def complete(self, prompt):
