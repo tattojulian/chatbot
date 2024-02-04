@@ -3,7 +3,7 @@ from fastapi import FastAPI, Request, Response
 from fastapi.encoders import jsonable_encoder
 
 from app.whatsapp_client import WhatsAppClient
-from app.openai_client import OpenAIClient
+# from app.openai_client import OpenAIClient
 
 app = FastAPI()
 
