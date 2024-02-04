@@ -35,7 +35,7 @@ class OpenAIClient:
         # sprint ("\nopenai key is" + openai.api_key + " and its type is " + openai.api_type)
 
     def complete(self, prompt):
-        response = client.completions.create(model="text-davinci-003",
+        response = client.completions.create(model="gpt-3.5-turbo",
         prompt=prompt,
         temperature=0.0,
         max_tokens=256,
