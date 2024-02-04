@@ -1,7 +1,7 @@
 import os
 from openai import OpenAI
 
-oclient = OpenAI(api_key='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')#os.environ.get("OPENAI_API_KEY"))
+oclient = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 class OpenAIClient:
     def __init__(self):
