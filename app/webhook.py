@@ -28,11 +28,11 @@ async def process_notifications(request: Request):
     if response["statusCode"] == 200:
         reply="testing from code"
         wtsapp_client.send_text_message(message=reply, phone_number=response["from_no"], )
-        #if response["body"] and response["from_no"]:
-        #    openai_client = OpenAIClient()
-        #    reply = openai_client.complete(prompt=response["body"])
-        #    print ("\nreply is:"  + reply)
-        #    wtsapp_client.send_text_message(message=reply, phone_number=response["from_no"], )
-        #    print ("\nreply is sent to whatsapp cloud:" + str(response))
+        if response["body"] and response["from_no"]:
+            openai_client = OpenAIClient()
+            reply = openai_client.complete(prompt=response["body"])
+            print ("\nreply is:"  + reply)
+            wtsapp_client.send_text_message(message=reply, phone_number=response["from_no"], )
+            print ("\nreply is sent to whatsapp cloud:" + str(response))
 
     return jsonable_encoder({"status": "success"})
