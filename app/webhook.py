@@ -1,7 +1,7 @@
 # webhook.py
 import os
 from fastapi import FastAPI, Request, Response
-from .whatsapp_client import WhatsAppClient
+from whatsapp_client import WhatsAppClient
 
 app = FastAPI()
 

@@ -80,7 +80,7 @@ class WhatsAppWrapper:
             "body": json.dumps("Unsupported method"),
             "isBase64Encoded": False
         }
-if __name__ == "__main__":
-    client = WhatsAppWrapper()
-    # send a template message
-    client.send_template_message("hello_world", "es_ES", "34674513139")
+#if __name__ == "__main__":
+client = WhatsAppWrapper()
+# send a template message
+client.send_template_message("hello_world", "es_ES", "34674513139")
