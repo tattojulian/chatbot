@@ -6,7 +6,8 @@ client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 class OpenAIClient:
     def __init__(self):
-        print("\nopenai key is" + client.api_key )
+        pass
+        #print("\nopenai key is" + client.api_key )
 
     def complete(self, prompt):
         response = client.chat.completions.create(
