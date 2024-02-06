@@ -4,8 +4,8 @@ from tinydb import TinyDB, Query
 
 oclient = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
-db = TinyDB(db_location='tmp', in_memory=False)
-
+#db = TinyDB(db_location='tmp', in_memory=False)
+db = TinyDB(storage=MemoryStorage)
 
 class OpenAIClient:
     def __init__(self):
