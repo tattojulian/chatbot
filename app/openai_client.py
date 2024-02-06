@@ -1,25 +1,56 @@
 import os
 from openai import OpenAI
+from tinydb import TinyDB, Query
 
 oclient = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
+db = TinyDB(db_location='tmp', in_memory=False)
+
+
 class OpenAIClient:
     def __init__(self):
-        print("\nopenai key is" + oclient.api_key )
+        print("\nopenai key is" + oclient.api_key)
 
-    def complete(self, prompt):
+    def complete(self, prompt, phone_number):
+        # Retrieve the last 10 interactions from the database for the given phone number.
+        all_conversations = db.read_list_record("conversations", phone_number, default=[])
+        last_5_conversations = all_conversations[-10:]
+        # Format the previous conversations to provide context to the GPT model.
+        previous_conversation = "\n".join(
+            [f'User: {conv["user_message"]}\nAssistant: {conv["gpt_response"]}' for conv in last_5_conversations])
+
+        # System message providing guidelines and context to the GPT model.
+        system_message = """Eres un asistente virtual de un estudio de tatuajes en la ciudad de Zaragoza españa. se llama tattoojulian studio, en dicho studio tatuan Julian, cuyo estilo es realista, chechu que su estilo es old school, tu vas a atender los mensajes que recibamos desde whatsapp, te agregare contexto de acuerdo a las conversaciones que hayas tenido con el usuario. Tus objetivos como agente, son que el usuario aparte una cita con uno de nuestros tatuadores, y, que cuando detectes que el usuario quiere una cita, retornes al final del texto de tu respuesta {%QUIERE_CITA%}. debes obtener el nombre del tatuador, cuando sea asi escribir al final el texto {%TATUADOR <nombre_tatuador>%}, que se quiere tatuar, en que parte del cuerpo{%ZONA <zona_cuerpo> %} y concretar una cita{%CITA <fecha> <hora> %}. inmediatamente tengas esos datos, escribes como la plantilla indica, al final de tu respuesta"""
+
+        messages = [
+            {"role": "system", "content": system_message}]
+
+        # Append the previous conversation to the system  message for context,
+        if previous_conversation:
+            messages[0][
+                "content"] += f"\n\nHere are the five previous user messages and chatbot responses for context:\n\n{previous_conversation}"
+        messages.append({
+            "role": "user",
+            "content": prompt})
         response = oclient.chat.completions.create(
             messages=[
                 {
                     "role": "user",
-                    "content": prompt,
+                    "content": messages,
                 }
             ],
             model="gpt-3.5-turbo",
         )
+        generated_response = response.choices[0].message.content
 
+        new_conversation = {
+            "user_message": prompt,
+            "gpt_response": generated_response}
+
+        db.append_to_conversation("conversations", phone_number, new_conversation)
         print("response form openai is :\n" + str(response) + "\n")
-        return response.choices[0].message.content
+        return generated_response
+
 
 # class OpenAIClient:
 #     def __init__(self):
@@ -35,7 +66,7 @@ class OpenAIClient:
 #                 }
 #             ],
 #             model="gpt-3.5-turbo",
-            
+
 #         prompt=prompt,
 #         temperature=0.0,
 #         max_tokens=256,
@@ -66,5 +97,5 @@ class OpenAIClient:
 if __name__ == "__main__":
     client = OpenAIClient()
     response = client.complete("how are you")
-    print (response)
+    print(response)
     
