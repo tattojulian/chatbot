@@ -35,6 +35,7 @@ class OpenAIClient:
         messages.append({
             "role": "user",
             "content": prompt})
+        print(messages)
         response = oclient.chat.completions.create(
             messages=[
                 {
@@ -44,6 +45,7 @@ class OpenAIClient:
             ],
             model="gpt-3.5-turbo",
         )
+        print(response)
         generated_response = response.choices[0].message.content
 
         new_conversation = {
