@@ -11,7 +11,7 @@ class OpenAIClient:
     def __init__(self):
         print("\nopenai key is" + oclient.api_key)
 
-            def complete(self, prompt, phone_number):
+        def complete(self, prompt, phone_number):
         # Retrieve the last 10 interactions from the database for the given phone number.
         previous_conversation=None
         try:
