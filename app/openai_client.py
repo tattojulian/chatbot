@@ -1,7 +1,7 @@
 import os
 from openai import OpenAI
 from tinydb import TinyDB, Query
-
+from tinydb.storages import MemoryStorage
 oclient = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 #db = TinyDB(db_location='tmp', in_memory=False)
