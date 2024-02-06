@@ -33,7 +33,7 @@ async def process_notifications(request: Request):
         if response["body"] and response["from_no"]:
             openaic = OpenAIClient()
             reply = openaic.complete(prompt=response["body"],phone_number=response["from_no"])
-            if '{%QUIERE_CITA%}' in reply:
+            if '{%TATUADOR' in reply:
                 wtsapp_client.send_text_message(body_mess="quiere cita", phone_number=response["from_no"])
             print("\nreply is:" + reply)
             wtsapp_client.send_text_message(body_mess=reply, phone_number=response["from_no"] )
