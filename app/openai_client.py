@@ -36,7 +36,7 @@ class OpenAIClient:
             "content": prompt})
         print(messages)
         response = oclient.chat.completions.create(
-            messages=message,
+            messages=messages,
             model="gpt-3.5-turbo",
         )
         print(response)
