@@ -30,8 +30,7 @@ class OpenAIClient:
 
         # Append the previous conversation to the system  message for context,
         if previous_conversation:
-            messages[0][
-                "content"] += f"\n\nHere are the five previous user messages and chatbot responses for context:\n\n{previous_conversation}"
+            messages.append({"content":f"\n\nHere are the five previous user messages and chatbot responses for context:\n\n{previous_conversation}"})
         messages.append({
             "role": "user",
             "content": prompt})
