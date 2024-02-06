@@ -11,13 +11,13 @@ class OpenAIClient:
     def __init__(self):
         print("\nopenai key is" + oclient.api_key)
 
-        def complete(self, prompt, phone_number):
+            def complete(self, prompt, phone_number):
         # Retrieve the last 10 interactions from the database for the given phone number.
         previous_conversation=None
         try:
             all_conversations = db.read_list_record("conversations", phone_number, default=[])
             last_5_conversations = all_conversations[-10:]
-        # Format the previous conversations to provide context to the GPT model.
+            # Format the previous conversations to provide context to the GPT model.
             previous_conversation = "\n".join(
             [f'User: {conv["user_message"]}\nAssistant: {conv["gpt_response"]}' for conv in last_5_conversations])
         except:
