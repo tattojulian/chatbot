@@ -50,8 +50,8 @@ class OpenAIClient:
         new_conversation = {
             "user_message": prompt,
             "gpt_response": generated_response}
-
-        db.append_to_conversation("conversations", phone_number, new_conversation)
+        groups = db.table('conversations')
+        db.insert({ 'phone_number': phone_number, 'text':new_conversation})
         print("response form openai is :\n" + str(response) + "\n")
         return generated_response
 
